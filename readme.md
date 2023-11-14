@@ -1,6 +1,3 @@
-## nginx server menggunakan docker tanpa menggunakan dokcerfile
-docker file is good, tapi kebanyakan docker image membuat server cepat penuh, dan penggunaanya harus melakukan build terlebih dahulu.
-
 ### PENGGUNAAN
 - clone this repo
 - run 
@@ -10,16 +7,26 @@ docker file is good, tapi kebanyakan docker image membuat server cepat penuh, da
 - untuk merubah port silahkan ganti di port docker-compose.yml
 - perubahan terjadi setelah container direstart, atau dibuild ulang
 
-### SETUP SEBAGI API GATEWAY
+### SETUP NGIN SEBAGAI API GATEWAY
+pada contoh kali ini, misalnya kita mebangun fitur CRUD products kita bisa melakukan 
+- GET /products - list product
+- GET /products/:id - detail product
+- POST /products - add a new product
+- PUT /products/:id - update a product
+- DELETE /products/:id - delete a product
+
+berarti hanya perlu menjadi dua pembagian. Karena semua retrive data dilakukan di method GET.
 
 ```
 # /etc/nginx/nginx.conf
 
+# loadbalancer
 upstream product_command {
     server 192.168.43.16:1111;
     # Add more backend servers as needed
 }
 
+# loadbalancer
 upstream product_query {
     server 192.168.43.16:2222;
     # Add more backend servers as needed
@@ -45,7 +52,16 @@ server {
     }
 
     # # jika membuat andpoint baru
+    # # jika membuat baru
+    # location /users {
+    #     proxy_pass http://ur-backend-server;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header Upgrade $http_upgrade;
+    #     proxy_set_header Connection 'upgrade';
+    #     proxy_set_header Host $host;
+    #     proxy_cache_bypass $http_upgrade;
+    #     break;
+    # }
 }
-
 
 ```
