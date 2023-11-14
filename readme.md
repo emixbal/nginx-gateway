@@ -7,7 +7,7 @@
 - untuk merubah port silahkan ganti di port docker-compose.yml
 - perubahan terjadi setelah container direstart, atau dibuild ulang
 
-### SETUP NGIN SEBAGAI API GATEWAY
+### SETUP NGINX SEBAGAI API GATEWAY
 pada contoh kali ini, misalnya kita mebangun fitur CRUD products kita bisa melakukan 
 - GET /products - list product
 - GET /products/:id - detail product
